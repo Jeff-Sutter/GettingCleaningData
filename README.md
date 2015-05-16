@@ -3,3 +3,6 @@ This directory contains:
 (2) AVG_Q5.txt 		: the output from run_Analysis.R
 (3) README.md 		: this file
 (4) CodeBook.md		: CodeBook for AVG_Q5.txt
+
+This repo does NOT contain, but the final directory SHOULD contain:
+(1) Folder called UCI HAR Dataset : the fully recursive and unzipped folder containing the data set provided in this course assignment.  
