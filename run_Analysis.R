@@ -46,21 +46,40 @@ run_Analysis <- function()
   featureNameVector <- c(t(select(features, Name)))
 
   # friendly names of target variables
-  featureFriendlyNameVector <-c(
-    "Body Acceleration-mean()-X",             "Body Acceleration-mean()-Y",            "Body Acceleration-mean()-Z",      "Body Acceleration-std()-X",             "Body Acceleration-std()-Y",           
-    "Body Acceleration-std()-Z",            	"GravityAcc-mean()-X",        			"GravityAcc-mean()-Y",        		"GravityAcc-mean()-Z",        			 "GravityAcc-std()-X",        
-    "GravityAcc-std()-Y",         				"GravityAcc-std()-Z",         			"Body Acceleration Jerk-mean()-X",  "Body Acceleration Jerk-mean()-Y",       "Body Acceleration Jerk-mean()-Z",      
-    "Body Acceleration Jerk-std()-X",        	"Body Acceleration Jerk-std()-Y",    	"Body Acceleration Jerk-std()-Z",   "Body Gyroscopic-mean()-X",          	 "Body Gyroscopic-mean()-Y",         
-    "Body Gyroscopic-mean()-Z",          		"Body Gyroscopic-std()-X",           	"Body Gyroscopic-std()-Y",          "Body Gyroscopic-std()-Z",           	 "Body Gyroscopic Jerk-mean()-X",     
-    "Body Gyroscopic Jerk-mean()-Y",      		"Body Gyroscopic Jerk-mean()-Z",     	"Body Gyroscopic Jerk-std()-X",     "Body Gyroscopic Jerk-std()-Y",       	 "Body Gyroscopic Jerk-std()-Z",      
-    "Body AccelerationMag-mean()",          	"Body AccelerationMag-std()",        	"GravityAccMag-mean()",       		"GravityAccMag-std()",        			 "Body Acceleration Jerk Magnetic-mean()",     
-    "Body Acceleration Jerk Magnetic-std()",   "Body Gyroscopic Magnetic-mean()",   	"Body Gyroscopic Magnetic-std()",   "Body Gyroscopic Jerk Magnetic-mean()",  "Body Gyroscopic Jerk Magnetic-std()",     
-    "Body Acceleration-mean()-X",           	"Body Acceleration-mean()-Y",        	"Body Acceleration-mean()-Z",       "Body Acceleration-std()-X",             "Body Acceleration-std()-Y",           
-    "Body Acceleration-std()-Z",            	"Body Acceleration Jerk-mean()-X",   	"Body Acceleration Jerk-mean()-Y",  "Body Acceleration Jerk-mean()-Z",       "Body Acceleration Jerk-std()-X",       
-    "Body Acceleration Jerk-std()-Y",        	"Body Acceleration Jerk-std()-Z",    	"Body Gyroscopic-mean()-X",         "Body Gyroscopic-mean()-Y",              "Body Gyroscopic-mean()-Z",         
-    "Body Gyroscopic-std()-X",           		"Body Gyroscopic-std()-Y",           	"Body Gyroscopic-std()-Z",          "Body AccelerationMag-mean()",           "Body AccelerationMag-std()",          
-    "Body Acceleration Jerk Magnetic-mean()",  "Body Acceleration Jerk Magnetic-std()", "Body Gyroscopic Magnetic-mean()", "Body Gyroscopic Magnetic-std()",        "Body Gyroscopic Jerk Magnetic-mean()",
-    "Body Gyroscopic Jerk Magnetic-std()")
+#   featureFriendlyNameVector <-c(
+#     "Body Acceleration-mean()-X",             "Body Acceleration-mean()-Y",            "Body Acceleration-mean()-Z",      "Body Acceleration-std()-X",             "Body Acceleration-std()-Y",           
+#     "Body Acceleration-std()-Z",            	"GravityAcc-mean()-X",        			"GravityAcc-mean()-Y",        		"GravityAcc-mean()-Z",        			 "GravityAcc-std()-X",        
+#     "GravityAcc-std()-Y",         				"GravityAcc-std()-Z",         			"Body Acceleration Jerk-mean()-X",  "Body Acceleration Jerk-mean()-Y",       "Body Acceleration Jerk-mean()-Z",      
+#     "Body Acceleration Jerk-std()-X",        	"Body Acceleration Jerk-std()-Y",    	"Body Acceleration Jerk-std()-Z",   "Body Gyroscopic-mean()-X",          	 "Body Gyroscopic-mean()-Y",         
+#     "Body Gyroscopic-mean()-Z",          		"Body Gyroscopic-std()-X",           	"Body Gyroscopic-std()-Y",          "Body Gyroscopic-std()-Z",           	 "Body Gyroscopic Jerk-mean()-X",     
+#     "Body Gyroscopic Jerk-mean()-Y",      		"Body Gyroscopic Jerk-mean()-Z",     	"Body Gyroscopic Jerk-std()-X",     "Body Gyroscopic Jerk-std()-Y",       	 "Body Gyroscopic Jerk-std()-Z",      
+#     "Body AccelerationMag-mean()",          	"Body AccelerationMag-std()",        	"GravityAccMag-mean()",       		"GravityAccMag-std()",        			 "Body Acceleration Jerk Magnetic-mean()",     
+#     "Body Acceleration Jerk Magnetic-std()",   "Body Gyroscopic Magnetic-mean()",   	"Body Gyroscopic Magnetic-std()",   "Body Gyroscopic Jerk Magnetic-mean()",  "Body Gyroscopic Jerk Magnetic-std()",     
+#     "Body Acceleration-mean()-X",           	"Body Acceleration-mean()-Y",        	"Body Acceleration-mean()-Z",       "Body Acceleration-std()-X",             "Body Acceleration-std()-Y",           
+#     "Body Acceleration-std()-Z",            	"Body Acceleration Jerk-mean()-X",   	"Body Acceleration Jerk-mean()-Y",  "Body Acceleration Jerk-mean()-Z",       "Body Acceleration Jerk-std()-X",       
+#     "Body Acceleration Jerk-std()-Y",        	"Body Acceleration Jerk-std()-Z",    	"Body Gyroscopic-mean()-X",         "Body Gyroscopic-mean()-Y",              "Body Gyroscopic-mean()-Z",         
+#     "Body Gyroscopic-std()-X",           		"Body Gyroscopic-std()-Y",           	"Body Gyroscopic-std()-Z",          "Body AccelerationMag-mean()",           "Body AccelerationMag-std()",          
+#     "Body Acceleration Jerk Magnetic-mean()",  "Body Acceleration Jerk Magnetic-std()", "Body Gyroscopic Magnetic-mean()", "Body Gyroscopic Magnetic-std()",        "Body Gyroscopic Jerk Magnetic-mean()",
+#     "Body Gyroscopic Jerk Magnetic-std()"
+#     )
+   featureFriendlyNameVector <-c(
+     "Body Acceleration-mean()-X", 				"Body Acceleration-mean()-Y", 				"Body Acceleration-mean()-Z", 		"Body Acceleration-std()-X", 			"Body Acceleration-std()-Y",  
+     "Body Acceleration-std()-Z",   				"Gravity Acceleration-mean()-X",    		"Gravity Acceleration-mean()-Y", 	"Gravity Acceleration-mean()-Z", 		"Gravity Acceleration-std()-X",    
+     "Gravity Acceleration-std()-Y", 			"Gravity Acceleration-std()-Z", 			"Body Acceleration Jerk-mean()-X", 	"Body Acceleration Jerk-mean()-Y", 		"Body Acceleration Jerk-mean()-Z",  
+     "Body Acceleration Jerk-std()-X",    		"Body Acceleration Jerk-std()-Y",   		"Body Acceleration Jerk-std()-Z", 	"Body Gyroscopic-mean()-X", 	 		"Body Gyroscopic-mean()-Y", 
+     "Body Gyroscopic-mean()-Z", 				"Body Gyroscopic-std()-X",  				"Body Gyroscopic-std()-Y", 			"Body Gyroscopic-std()-Z",  	 		"Body Gyroscopic Jerk-mean()-X", 
+     "Body Gyroscopic Jerk-mean()-Y",  			"Body Gyroscopic Jerk-mean()-Z", 			"Body Gyroscopic Jerk-std()-X", 	"Body Gyroscopic Jerk-std()-Y",   		"Body Gyroscopic Jerk-std()-Z",  
+     "Body AccelerationMag-mean()", 				"Body AccelerationMag-std()",    			"Gravity AccelerationMag-mean()", 	"Gravity AccelerationMag-std()", 		"Body Acceleration Jerk Magnetic-mean()", 
+     "Body Acceleration Jerk Magnetic-std()", 	"Body Gyroscopic Magnetic-mean()",  		"Body Gyroscopic Magnetic-std()", 	"Body Gyroscopic Jerk Magnetic-mean()", "Body Gyroscopic Jerk Magnetic-std()", 
+     "Body Acceleration-mean()-X", 				"Body Acceleration-mean()-Y",    			"Body Acceleration-mean()-Z", 		"Body Acceleration-std()-X", 			"Body Acceleration-std()-Y",  
+     "Body Acceleration-std()-Z", 				"Body Acceleration Jerk-mean()-X",  		"Body Acceleration Jerk-mean()-Y", 	"Body Acceleration Jerk-mean()-Z", 		"Body Acceleration Jerk-std()-X",   
+     "Body Acceleration Jerk-std()-Y",    		"Body Acceleration Jerk-std()-Z",   		"Body Gyroscopic-mean()-X", 		"Body Gyroscopic-mean()-Y", 			"Body Gyroscopic-mean()-Z", 
+     "Body Gyroscopic-std()-X",  				"Body Gyroscopic-std()-Y",  				"Body Gyroscopic-std()-Z", 			"Body AccelerationMag-mean()", 			"Body AccelerationMag-std()", 
+     "Body Acceleration Jerk Magnetic-mean()", 	"Body Acceleration Jerk Magnetic-std()",	"Body Gyroscopic Magnetic-mean()", 	"Body Gyroscopic Magnetic-std()", 		"Body Gyroscopic Jerk Magnetic-mean()",
+     "Body Gyroscopic Jerk Magnetic-std()"			
+   )
+
+
   
   # subset data
   test_data   <- test_data[,featureIDVector]
