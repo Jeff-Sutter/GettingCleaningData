@@ -2,7 +2,8 @@ require(dplyr)
 require(tidyr)
 run_Analysis <- function()
 {
-  
+  ######################################################  
+  # PART 1: LOADING DATA FILES
   # file paths
   test_data_location    <- "UCI HAR Dataset\\test\\X_test.txt"
   test_subj_location    <- "UCI HAR Dataset\\test\\subject_test.txt"
@@ -32,15 +33,19 @@ run_Analysis <- function()
   features    <- tbl_df(read.csv(features_location, stringsAsFactors=FALSE, sep="", head=FALSE))
   activity    <- tbl_df(read.csv(activity_location, stringsAsFactors=FALSE, sep="", head=FALSE))
   names(activity) <- c("ACTIVITY_ID", "ACTIVITY")
-  
-  # assign colnames to features and filter for only std and mean
   names(features) <- c("ID", "Name")  
+  
+
+  ######################################################
+  # PART 2: REDUCING DATA TO TARGET VARIABLE TYPES
+  # select only columns ending in -mean() or -std()
   features <- filter(features, grepl('-mean\\(\\)|-std\\(\\)', Name))
-  #features <- filter(features, grepl('-mean\\(\\)', Name))
   
   # reduce xtest and xtrain to just the desired features
   featureIDVector <- c(t(select(features, ID)))
   featureNameVector <- c(t(select(features, Name)))
+
+  # friendly names of target variables
   featureFriendlyNameVector <-c(
     "Body Acceleration-mean()-X",             "Body Acceleration-mean()-Y",            "Body Acceleration-mean()-Z",      "Body Acceleration-std()-X",             "Body Acceleration-std()-Y",           
     "Body Acceleration-std()-Z",            	"GravityAcc-mean()-X",        			"GravityAcc-mean()-Y",        		"GravityAcc-mean()-Z",        			 "GravityAcc-std()-X",        
@@ -57,13 +62,18 @@ run_Analysis <- function()
     "Body Acceleration Jerk Magnetic-mean()",  "Body Acceleration Jerk Magnetic-std()", "Body Gyroscopic Magnetic-mean()", "Body Gyroscopic Magnetic-std()",        "Body Gyroscopic Jerk Magnetic-mean()",
     "Body Gyroscopic Jerk Magnetic-std()")
   
-  
+  # subset data
   test_data   <- test_data[,featureIDVector]
   train_data  <- train_data[,featureIDVector]
+
+  # set friendly names
   names(test_data)  <- featureFriendlyNameVector
   names(train_data) <- featureFriendlyNameVector
   
-  # add a column called DataSetType to distinguish the type of data and union sets
+
+  ######################################################
+  # PART 3: APPENDING METADATA (training vs testing data, activity, and subject)
+  # add a SOURCE column  to distinguish the type of data and union sets
   test_data$SOURCE = "TEST"
   train_data$SOURCE = "TRAIN"
 
@@ -71,20 +81,28 @@ run_Analysis <- function()
   test_data  <- tbl_df(cbind(test_subj, test_acti, test_data))
   train_data <- tbl_df(cbind(train_subj, train_acti, train_data))
 
+  ######################################################
+  # PART 4: DATA FORMING AND SHAPING
+  # union test and train data
   xall <- union(test_data,train_data)   
+
+  # convert feature columns into rows  
   xall <- gather(xall, "MEASURE", "VALUE", -c(SUBJECT, ACTIVITY_ID, SOURCE))
   
-  
+  # add "TYPE" to specify std or mean
   xstd <- (xall %>%  filter(grepl('-std\\(\\)', MEASURE)) %>% mutate(TYPE="STD")) 
   xmean <- (xall %>%  filter(grepl('-mean\\(\\)', MEASURE)) %>% mutate(TYPE="MEAN")) 
+
+  # union std and mean and add activity label via join
   xall <- union(xstd,xmean)   
   xall <- inner_join(xall, activity)
   
-  # tidy data for part 4
+  ######################################################
+  #PART 5: FINAL DATA SETS
+  # tidy data for part 4 of assingment specification
   xall <- select(xall, -ACTIVITY_ID)
   
-  
-  # averaged data for part 5
+  # averaged data for part 5 of assingment specification
   grp_cols <- c("MEASURE",  "ACTIVITY", "SUBJECT")
   dots <- lapply(grp_cols, as.symbol)
   xall %>% group_by_(.dots=dots) %>% summarise(AVERAGE = mean(VALUE))
