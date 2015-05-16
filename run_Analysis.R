@@ -124,6 +124,8 @@ run_Analysis <- function()
   # averaged data for part 5 of assingment specification
   grp_cols <- c("MEASURE",  "ACTIVITY", "SUBJECT")
   dots <- lapply(grp_cols, as.symbol)
-  xall %>% group_by_(.dots=dots) %>% summarise(AVERAGE = mean(VALUE))
-  
+  q5 <- xall %>% group_by_(.dots=dots) %>% summarise(AVERAGE = mean(VALUE))
+  write.table(q5, file="AVG_Q5.txt",  row.name=FALSE)
+
+
 }
