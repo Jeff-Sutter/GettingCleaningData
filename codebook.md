@@ -1,9 +1,13 @@
 CODEBOOK FOR COURSERA CLASS: "Getting and Cleaning Data"
+--------------------
 STUDENT	: 	DOUGLAS HALE
+--------------------
 DATE	:	05/15/2015
+--------------------
 VARIABLES
+--------------------
 	(1) "MEASURE"
-			DESCRIPTION		: Friendly version of the feature measured
+			DESCRIPTION		: The feature measured
 			FORMAT			: TEXT
 			POSSIBLE VALUES	:
 				"Body Acceleration-mean()-X", 				
@@ -75,7 +79,7 @@ VARIABLES
 				
 		
 	(2) "ACTIVITY" 	
-			DESCRIPTION		: Friendly version of the activity being perfored by the subject when the measure was taken
+			DESCRIPTION		: The activity being perfored by the subject when the measure was taken
 			FORMAT			: TEXT
 			POSSIBLE VALUES	: "WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS", "SITTING", "STANDING", "LAYING"
 
